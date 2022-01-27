@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> 201920995 김진광 인터페이스 실습 20번 </title>
+	<meta charset="UTF-8">
+	<meta name="title" content="인터페이스 실습 20번">
+	<meta name="author" content="김진광">
+</head>
+
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+	var watchID, i=0;
+	var x1, x2, y1, y2;
+	var dist;
+
+	function startMyLocation() {
+	    if (navigator.geolocation) { 
+			watchID = navigator.geolocation.watchPosition(myCallback); 
+	    } else {
+		    alert("지오로케이션이 지원되지 않습니다.");
+	    }
+	}
+	
+	function myCallback(myPosition) {
+		var latitude = myPosition.coords.latitude,
+		longitude = myPosition.coords.longitude;
+
+		if(i==0) {
+		       x1=latitude;
+		       y1=longitude;
+		       document.getElementById("display").innerHTML += '<br> 위도 ' + x1 + ', 경도 ' + y1 ;
+		}
+
+		else {
+		       x2=latitude;
+		       y2=longitude;
+		       document.getElementById("display").innerHTML += '<br> 이동 후 위도 ' + x2 + ', 이동 후 경도 ' + y2 ;
+		}
+		i++;
+			
+		dist=Distance(x1, y1, x2, y2);
+		x1=x2;
+		y1=y2;
+		document.getElementById("display").innerHTML += '<br>움직인 거리 ' + dist;
+	}
+
+	function Distance(lat1, lon1, lat2, lon2) {
+
+		var R=6371;
+		var dLat= (lat2-lat1).toRad();
+		var dLon=(lon2-lon1).toRad();
+		var a= Math.sin(dLat/2)*Math.sin(dLat/2)
+		      + Math.cos(lat1.toRad()) * Math.cos(lat2.toRad())
+		      *  Math.sin(dLon/2) * Math.sin(dLon/2);
+		var b=2 * Math.atan2(Math.sqrt(a), Math. sqrt(1 - a));
+		var c=R*b;
+		return c;
+	}
+
+	Number.prototype.toRad = function() {
+		return this * Math.PI / 180;
+	}
+
+	function stopMyLocation(){
+	    if (navigator.geolocation){
+		    navigator.geolocation.clearWatch(watchID);
+			document.getElementById("display").innerHTML += '<br> ** 추적 종료! **' ;
+	    }else{
+		    alert("지오로케이션이 지원되지 않습니다.");
+	    }
+	}
+	</script>
+
+
+    <h3>움직인 거리 계산하기</h3>
+	<button onclick="startMyLocation();">추적시작</button>
+	<button onclick="stopMyLocation();">추적끝</button>
+	<div id="display"> </div>
+
+</body>
+</html>

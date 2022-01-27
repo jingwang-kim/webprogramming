@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> 201920995 김진광 자바스크립트 API </title>
+	<meta charset="UTF-8">
+	<meta name="title" content="자바 스크립트 고급 API">
+	<meta name="author" content="김진광">
+</head>
+
+<body>
+
+<p>Count Time: <output id="result"></output></p>
+<button onclick="startWorker()">Start</button>
+<button onclick="stopWorker()">Stop</button>
+
+
+ <script type="text/javascript">
+   var w1, w2, w3;
+   var h, m ,s;
+   function startWorker() {
+	if(typeof(Worker) !=="undefined") {
+	   if(typeof(w1) == "undefined" || typeof(w2) == "undefined" ||typeof(w3) == "undefined") {
+		w1=new Worker("demo_workers_s.js");
+		w2=new Worker("demo_workers_m.js");
+		w3=new Worker("demo_workers_h.js");
+	   }
+
+	   w1.onmessage = function(event) {
+		s=event.data;
+		document.getElementById("result").innerHTML = h+m+s;
+	   };
+
+	   w2.onmessage = function(event) {
+		m=event.data;
+		document.getElementById("result").innerHTML = h+m+s;
+	   };
+
+	   w3.onmessage = function(event) {
+		h=event.data;
+		document.getElementById("result").innerHTML = h+m+s;   
+	   };
+
+	}  else {
+	     document.getElementById("result").innerHTML="Sorry! No Wed Worker support.";
+	}
+   }
+
+   function stopWorker() {
+	w1.terminate();
+	w1=undefined;
+
+	w2.terminate();
+	w2=undefined;
+
+	w3.terminate();
+	w3=undefined;
+   }
+
+ </script>
+</body>
+</html>

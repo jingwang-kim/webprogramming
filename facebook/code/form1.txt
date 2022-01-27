@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> 수강과목조사 </title>
+	<meta name="title" content=" 20번 문제 수강과목조사">
+	<meta charset="UTF-8">
+	<meta name="author" content="김진광">
+</head>
+
+<body>
+
+<h3>수강과목 조사</h3>
+
+<form method="get" action="form_app.js">
+이름:&nbsp; <input type="text" name="name"/><br>
+학과:&nbsp; <input type="text" name="major"/><br>
+
+학년: <br>
+	<input type="radio" name="grade" value="one"/>1학년
+	<input type="radio" name="grade" value="two"/>2학년
+	<input type="radio" name="grade" value="three"/>3학년
+	<input type="radio" name="grade" value="four"/>4학년 이상<br>
+
+수강과목: <br>
+	<input type="checkbox" name="subject" value="IT"/>IT기술의 이해
+	<input type="checkbox" name="subject" value="web"/>웹프로그래밍기초
+	<input type="checkbox" name="subject" value="UiUx"/>UI/UX설계<br>
+
+<p>&nbsp;</p>
+<input type="button" value="확인"/>&nbsp;
+<input type="reset" value="취소"/>
+</form>
+
+</body>
+</html>

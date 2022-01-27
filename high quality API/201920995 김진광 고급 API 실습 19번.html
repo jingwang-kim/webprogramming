@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title> 201920995 김진광 고급 API 19번 </title>
+	<meta charset="UTF-8">
+	<meta name="title" content="고급API 19">
+	<meta name="author" content="김진광">
+</head>
+
+<body style="margin: 40px;">
+	<div id="dragsrc" style="margin-bottom:20px; display:block;">
+		<img id="Germany" src="Germany.png" style="display: inline; width:200px;" draggable = "true">
+		<img id="Korea" src="Korea.png" style="display: inline; width:200px;" draggable = "true">
+		<img id="switzerland" src="switzerland.png" style="display: inline; width:200px;" draggable = "true">
+		<img id="USA" src="USA.png" style="display: inline; width:200px;" draggable = "true">
+	</div>
+	<h1> 드롭 영역 </h1>
+	<div id="droptarget" style="border-color:gray; border-style:solid; height: 500px; font-size: 100pt; ">
+	      </div>
+ 
+    <script type="text/javascript">
+    var localStorage = window.localStorage;
+    var src = document.getElementById("dragsrc"),
+	    srcId,
+	    target = document.getElementById("droptarget");
+
+    if(!localStorage) {
+	alert("로컬 스토리지를 지원하지 않습니다.");
+    }
+
+
+    src.ondragstart = function(e){
+	    srcId = e.target.id;
+	    e.dataTransfer.setData("text", srcId);
+    }
+
+    target.ondragenter = function(e){
+	    dropId = e.target.id;
+    }
+
+    target.ondragover = function(e){
+	    e.preventDefault();
+    }
+
+    target.ondrop = function(e){
+	    var data = e.dataTransfer.getData("text");
+	    localStorage.setItem("sto" ,data);
+	    document.getElementById("droptarget").innerHTML=data;
+    }
+    droptarget.innerHTML=localStorage.getItem("sto");
+
+    </script>
+
+</body>
+</html>

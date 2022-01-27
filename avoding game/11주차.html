@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta authors="김진광"/>
+<title> 11주차 과제 </title>
+</head>
+<body>
+    <img onmousemove="move1()" id="man" src="man.png" width="100px"
+        style="position: absolute; left: 50px; top: 120px;" />
+    <img id="bullet" src="bullet.png" width="100px"
+        style="position: absolute; left: 400px; top: 400px;" />
+
+    <script type="text/javascript">
+        var stopped = true;
+        var man_x;
+        var man_y;
+        var clear;
+        document.getElementById("man").onmousedown = start_stop_move;
+        document.getElementById("man").onmouseup = start_stop_move;
+
+        function start_stop_move() {
+            if (stopped) stopped = false;
+            else stopped = true;
+        }
+
+        function stop_move() {
+            stopped=true;
+        }
+
+        function move1() {
+            e = window.event;
+            man_x = e.clientX;
+            man_y = e.clientY;
+	e.preventDefault();
+
+            document.getElementById("x").value = man_x;
+            document.getElementById("y").value = man_y;
+
+            if (!stopped) {
+                document.getElementById("man").style.left = (man_x-50) + "px";
+                document.getElementById("man").style.top = (man_y-50) + "px";
+            }
+        }
+
+        function move2(){
+	bulx=parseInt(document.getElementById("bullet").style.left);
+	buly=parseInt(document.getElementById("bullet").style.top);
+	var rand1=Math.floor(Math.random() * ((bulx+47)-(bulx-47))+(bulx-47));
+	var rand2=Math.floor(Math.random() * ((buly+47)-(buly-47))+(buly-47));
+	if(rand1<0) rand1*=-1;
+	if(rand2<0) rand2*=-1;
+	bullet.style.left=rand1+"px";
+	bullet.style.top=rand2+"px";
+
+            document.getElementById("x2").value = rand1;
+            document.getElementById("y2").value = rand2;
+
+	if(rand1 > (man_x-50)&&rand1<=(man_x+100)&&rand2>(man_y-50)&&rand2<=(man_y+60))
+	{
+	     Hit();
+	}
+        }
+
+        function Auto(){
+	clear=setInterval("move2()", 50);
+        }
+
+        function Hit(){
+	alert("You Lost!");
+	clearTimeout(clear);
+	stopped=true;
+            document.getElementById("man").onmousedown = stop_move;
+            document.getElementById("man").onmouseup = stop_move;
+        }
+
+    </script>
+
+    <form>
+        Man 좌표:
+        (X, Y)=(<input id="x"  size="3" type="text"/>,
+        <input id="y"  size="3" type="text"/>),
+
+        Bullet 좌표:
+        (X, Y)=(<input id="x2"  size="3" type="text"/>,
+        <input id="y2"  size="3" type="text"/>)
+        <input type="button" value="start" onclick="Auto()">
+    </form>
+</body>
+</html>
